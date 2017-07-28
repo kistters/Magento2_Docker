@@ -16,7 +16,6 @@ database:
 compile:
   override:
     - docker-compose build web
-    - docker-compose build phpfpm
 test:
   pre:
     - docker-compose up -d web percona
@@ -24,8 +23,7 @@ test:
 
   override:
     - |
-        #docker exec -it marketplace_phpfpm /bin/sh -c "php -d memory_limit=2G vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist"
-        docker exec -it marketplace_phpfpm /bin/sh -c "php -d memory_limit=3G ./bin/magento dev:tests:run" | tee testResult 
+        docker-compose -f docker-compose.yml -f docker-compose.test.yml run unit-test | tee testResult 
 
         if grep -q "fail" testResult
         then
@@ -44,15 +42,5 @@ deployment:
     branch: master
     commands:
       - docker images
-      - |
-          echo "clean ./var ./setup ./dev"
-          du -sh ./src
-          docker exec -it marketplace_phpfpm /bin/sh -c "rm -rf ./var/* ./setup/* ./dev/*"
-          du -sh ./src
-      - |
-          echo "ZIP pronto para deploy"
-          zip -R magento.zip ./src
-          ls ./magento.zip
-          du -sh ./magento.zip
-
-          echo "Happy now ..."
+      - ./docker/deploy.sh
+      - echo "Happy now ..."

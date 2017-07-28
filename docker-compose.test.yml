@@ -23,3 +23,13 @@ services:
             - MAGE_SETUP_ADMIN_PASSWORD=12345qw
         networks:
             - network-back
+
+    unit-test:
+        build: docker/phpfpm
+        restart: always
+        container_name: marketplace_unit-test
+        volumes:
+            - ./src:/src/www
+        command: /bin/sh -c "php -d memory_limit=2G vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist"
+        networks:
+            - network-back
