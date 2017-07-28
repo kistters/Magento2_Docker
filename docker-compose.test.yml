@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+## SETUP MAGENTO ##
+    setup:
+        build: docker/phpfpm
+        restart: always
+        container_name: marketplace_setup
+        volumes:
+            - ./src:/src/www
+        command: /bin/sh -c "chmod +x -R ./setup-mage && ./setup-mage"
+        environment:
+            - MAGE_SETUP_DB_HOST=percona
+            - MAGE_SETUP_DB_NAME=MAGE_TWO
+            - MAGE_SETUP_DB_USER=root
+            - MAGE_SETUP_DB_PASSWORD=root
+            - MAGE_SETUP_BASE_URL=http://it.mage-two/
+            - MAGE_SETUP_ADMIN_BACKEND_FRONTNAME=admin
+            - MAGE_SETUP_ADMIN_FIRSTNAME=Owner
+            - MAGE_SETUP_ADMIN_LASTNAME=Mage
+            - MAGE_SETUP_ADMIN_EMAIL=owner@mage.com
+            - MAGE_SETUP_ADMIN_USER=admin
+            - MAGE_SETUP_ADMIN_PASSWORD=12345qw
+        networks:
+            - network-back
