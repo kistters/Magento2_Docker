@@ -9,14 +9,18 @@ machine:
 dependencies:
   pre:
     - sudo pip install docker-compose==1.8.0
-
 database:
   override:
-    - docker-compose build web percona
+    - docker-compose up -d percona
+    - docker exec -it percona_development bash -c "mysql -uroot -proot < /dumps/base_percona_test.sql"
 
+compile:
+  override:
+    - docker-compose build web
+    - docker-compose build phpfpm
 test:
   pre:
-    - docker-compose up -d web percona
+    - docker-compose up -d web
     - docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm setup
 
   override:
@@ -40,6 +44,7 @@ deployment:
   staging:
     branch: master
     commands:
+      - docker images
       - |
           echo "clean ./var ./setup ./dev"
           du -sh ./src

@@ -11,7 +11,7 @@ services:
         command: /bin/sh -c "chmod +x -R ./setup-mage && ./setup-mage"
         environment:
             - MAGE_SETUP_DB_HOST=percona
-            - MAGE_SETUP_DB_NAME=MAGE_TWO
+            - MAGE_SETUP_DB_NAME=MAGE_TEST
             - MAGE_SETUP_DB_USER=root
             - MAGE_SETUP_DB_PASSWORD=root
             - MAGE_SETUP_BASE_URL=http://it.mage-two/

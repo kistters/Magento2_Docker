@@ -35,8 +35,8 @@ services:
             - ./docker/mysql/data/percona:/var/lib/mysql
             - ./docker/mysql/dumps:/dumps
         environment:
-          MYSQL_USERNAME: root
-          MYSQL_ROOT_PASSWORD: root
+            MYSQL_USERNAME: root
+            MYSQL_ROOT_PASSWORD: root
         networks:
             - network-back
 
