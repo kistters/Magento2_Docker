@@ -20,7 +20,7 @@ compile:
 test:
   pre:
     - docker-compose up -d web percona
-    - docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm setup
+    - docker-compose -f docker-compose.yml -f docker-compose.test.yml run setup
 
   override:
     - |
