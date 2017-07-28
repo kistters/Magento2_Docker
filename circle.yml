@@ -1,0 +1,54 @@
+machine:
+  pre:
+    - echo 'DOCKER_OPTS="-s btrfs -e lxc -D --userland-proxy=false"' | sudo tee -a /etc/default/docker
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+    - sudo chmod 0755 /usr/bin/docker
+  services:
+    - docker
+  
+dependencies:
+  pre:
+    - sudo pip install docker-compose==1.8.0
+
+database:
+  override:
+    - docker-compose build web percona
+
+test:
+  pre:
+    - docker-compose up -d web percona
+    - docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm setup
+
+  override:
+    - |
+        #docker exec -it marketplace_phpfpm /bin/sh -c "php -d memory_limit=2G vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist"
+        docker exec -it marketplace_phpfpm /bin/sh -c "php -d memory_limit=3G ./bin/magento dev:tests:run" | tee testResult 
+
+        if grep -q "fail" testResult
+        then
+          echo "Failed test cases:"
+          cat ./testResult | grep fail | awk '{print $2, $3}'
+        #exit 1
+
+        else
+          echo "Test Cases passed"
+        fi
+
+        exit 0
+
+deployment:
+  staging:
+    branch: master
+    commands:
+      - |
+          echo "clean ./var ./setup ./dev"
+          du -sh ./src
+          docker exec -it marketplace_phpfpm /bin/sh -c "rm -rf ./var/* ./setup/* ./dev/*"
+          du -sh ./src
+      - |
+          echo "ZIP pronto para deploy"
+          zip -R magento.zip ./src
+          ls ./magento.zip
+          du -sh ./magento.zip
+
+          echo "Happy now ..."

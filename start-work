@@ -1,0 +1,9 @@
+#!/bin/sh
+echo "circle"
+
+echo "build images and containers"
+docker-compose build web
+docker-compose up -d web percona
+
+echo "setup magento"
+docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm setup
