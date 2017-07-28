@@ -28,4 +28,3 @@ echo "folder permissions"
 chown -R www-data:www-data .
 
 echo "Setup finished..."
-exit $?
