@@ -9,30 +9,30 @@ machine:
 dependencies:
   pre:
     - sudo pip install docker-compose==1.8.0
-# database:
-#   override:
-#     - docker-compose  build percona
+database:
+  override:
+    - docker-compose  build percona
 
-# compile:
-#   override:
-#     - docker-compose up -d web percona
+compile:
+  override:
+    - docker-compose up -d web percona
 test:
-  # pre:
-  #   - docker-compose -f docker-compose.yml -f docker-compose.test.yml run setup
+  pre:
+    - docker-compose -f docker-compose.yml -f docker-compose.test.yml run setup
 
   override:
     - |
-        # docker-compose -f docker-compose.yml -f docker-compose.test.yml run unit-test | tee testResult 
+        docker-compose -f docker-compose.yml -f docker-compose.test.yml run unit-test | tee testResult 
 
-        # if grep -q "fail" testResult
-        # then
-        #   echo "Failed test cases:"
-        #   cat ./testResult | grep fail | awk '{print $2, $3}'
-        # #exit 1
+        if grep -q "fail" testResult
+        then
+          echo "Failed test cases:"
+          cat ./testResult | grep fail | awk '{print $2, $3}'
+        #exit 1
 
-        # else
-        #   echo "Test Cases passed"
-        # fi
+        else
+          echo "Test Cases passed"
+        fi
 
         exit 0
 
