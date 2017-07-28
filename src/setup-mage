@@ -1,0 +1,31 @@
+#!/bin/sh
+echo "Initializing setup..."
+
+cd /src/www
+
+echo "composer install"
+composer install
+
+echo "folder permissions"
+chown -R www-data:www-data .
+
+echo "setup"
+php -d memory_limit=2G ./bin/magento setup:install \
+  --db-host=$MAGE_SETUP_DB_HOST \
+  --db-name=$MAGE_SETUP_DB_NAME \
+  --db-user=$MAGE_SETUP_DB_USER \
+  --db-password=$MAGE_SETUP_DB_PASSWORD \
+  --base-url=$MAGE_SETUP_BASE_URL \
+  --backend-frontname=$MAGE_SETUP_ADMIN_BACKEND_FRONTNAME \
+  --admin-firstname=$MAGE_SETUP_ADMIN_FIRSTNAME \
+  --admin-lastname=$MAGE_SETUP_ADMIN_LASTNAME \
+  --admin-email=$MAGE_SETUP_ADMIN_EMAIL \
+  --admin-user=$MAGE_SETUP_ADMIN_USER \
+  --admin-password=$MAGE_SETUP_ADMIN_PASSWORD
+
+## to /etc and /var and /generated
+echo "folder permissions"
+chown -R www-data:www-data .
+
+echo "Setup finished..."
+exit $?
