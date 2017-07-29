@@ -30,6 +30,6 @@ deployment:
     branch: master
     commands:
       - docker images
-      - ./srcipts/clean-untracked.sh
-      - ./srcipts/zip-magento.sh
+      - ./scripts/clean-untracked.sh
+      - ./scripts/zip-magento.sh
       - "Happy now ..."
