@@ -4,4 +4,4 @@
 
 Magento 2 - Docker Environment - phpfpm7-alpine - nginx-alpine
 
-<img src="_files/mau-mau.png" width="128" height="128" title="Ouçam minha gargalhada fatal - hihihahaha"/>
+<img src="./.files/mau-mau.png" width="64" height="64" title="Ouçam minha gargalhada fatal - hihihahaha"/>

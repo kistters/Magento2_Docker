@@ -15,6 +15,7 @@ database:
 
 compile:
   override:
+    - ls -la 
     - docker-compose up -d web percona
 test:
   pre:
