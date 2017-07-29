@@ -2,11 +2,6 @@
 
 echo "magento"
 du -sh ./src
-echo "clean ./var ./setup ./dev ./src/pub/static ./src/setup-mage"
-ls -la ./src/var/
-rm -rf ./src/var/* ./src/pub/static/* 
-ls -la ./src/var/
-du -sh ./src
 
 echo "preparar ZIP"
 echo "--------------------------------------------"

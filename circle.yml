@@ -30,5 +30,6 @@ deployment:
     branch: master
     commands:
       - docker images
-      - ./docker/deploy.sh
-      - echo "Happy now ..."
+      - ./srcipts/clean-untracked.sh
+      - ./srcipts/zip-magento.sh
+      - "Happy now ..."

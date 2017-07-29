@@ -28,9 +28,9 @@ RUN apk add --update --no-cache \
         bcmath \
         soap
 
-
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
-  
+
+RUN apk add --update --no-cache su-exec
 
 WORKDIR /src/www
