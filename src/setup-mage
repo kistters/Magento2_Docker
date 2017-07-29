@@ -1,10 +1,13 @@
 #!/bin/sh
 echo "Initializing setup..."
 
-cd /src/www
-
 echo "composer install"
 composer install
+
+find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} \;
+find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
+chown -R :www-data .
+chmod u+x bin/magento
 
 echo "setup"
 php -d memory_limit=2G ./bin/magento setup:install \

@@ -15,13 +15,12 @@ database:
 
 compile:
   override:
-    - ls -la 
-    - pwd
     - docker-compose up -d --build web percona; sleep 3
 test:
   pre:
-    - docker-compose -f docker-compose.yml \
-            run --rm phpfpm /bin/sh -c "chmod +x ./setup-mage && ./setup-mage"
+    - |
+        docker-compose -f docker-compose.yml \
+            run --rm phpfpm /bin/sh -c "./setup-mage"
 
   override:
     - exit 0

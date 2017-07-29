@@ -6,5 +6,9 @@ docker-compose build percona; sleep 5
 docker-compose up -d --build web percona; sleep 3
 
 echo "setup magento"
+#rm -rf ./src/var/* ./src/generated/* ./src/pub/static/*
+#chown kisters:kisters -R ./src/var ./src/generated ./src/pub/static ./src/pub/media ./src/app/etc ./src/pub/media/theme/preview ./src/pub/media/theme
+#chmod 777 -R ./src/var ./src/generated ./src/pub/static ./src/pub/media ./src/app/etc ./src/pub/media/theme/preview ./src/pub/media/theme
+
 docker-compose -f docker-compose.yml \
-			run --rm phpfpm /bin/sh -c "chmod +x ./setup-mage && ./setup-mage"
+			run --rm phpfpm /bin/sh -c "./setup-mage"
