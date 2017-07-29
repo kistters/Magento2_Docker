@@ -11,15 +11,17 @@ dependencies:
     - sudo pip install docker-compose==1.8.0
 database:
   override:
-    - docker-compose  build percona
+    - docker-compose build percona; sleep 5
 
 compile:
   override:
     - ls -la 
-    - docker-compose up -d web percona
+    - pwd
+    - docker-compose up -d --build web percona; sleep 3
 test:
   pre:
-    - docker-compose -f docker-compose.yml -f docker-compose.test.yml run setup
+    - docker-compose -f docker-compose.yml \
+            run --rm phpfpm /bin/sh -c "chmod +x ./setup-mage && ./setup-mage"
 
   override:
     - exit 0

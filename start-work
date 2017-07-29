@@ -2,8 +2,9 @@
 echo "circle"
 
 echo "build images and containers"
-docker-compose build web
-docker-compose up -d --build web percona
+docker-compose build percona; sleep 5
+docker-compose up -d --build web percona; sleep 3
 
 echo "setup magento"
-docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm setup
+docker-compose -f docker-compose.yml \
+			run --rm phpfpm /bin/sh -c "chmod +x ./setup-mage && ./setup-mage"
