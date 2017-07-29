@@ -20,7 +20,7 @@ test:
   pre:
     - |
         docker-compose -f docker-compose.yml \
-            run --rm phpfpm /bin/sh -c "./setup-mage"
+            run phpfpm /bin/sh -c "./setup-mage"
 
   override:
     - exit 0
