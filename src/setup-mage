@@ -5,10 +5,16 @@ echo "composer install"
 su-exec www-data \
   composer install
 
+echo "dir"
+
+ls -la .
+
 find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} \;
 find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
 chown -R :www-data .
 chmod u+x bin/magento
+
+ls -la vendor
 
 echo "setup"
 su-exec www-data \
