@@ -23,7 +23,7 @@ test:
         docker-compose -f docker-compose.yml \
             run phpfpm /bin/sh -c "./setup-mage"
 
-    - chmod -R 777 .src/var .src/etc/env.php
+    - chmod -R 777 ./src/var ./src/etc/env.php
   override:
     - exit 0
 
