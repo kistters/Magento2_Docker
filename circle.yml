@@ -18,10 +18,10 @@ compile:
   override:
     - docker-compose up -d --build web percona; sleep 3
 test:
-  # pre:
-  #   - |
-  #       docker-compose -f docker-compose.yml \
-  #           run phpfpm /bin/sh -c "../setup-mage"
+  pre:
+    - |
+        docker-compose -f docker-compose.yml \
+            run phpfpm /bin/sh -c "../setup-mage"
   override:
     - exit 0
 
