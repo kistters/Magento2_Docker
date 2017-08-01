@@ -33,7 +33,7 @@ su-exec www-data \
     --admin-user=$MAGE_SETUP_ADMIN_USER \
     --admin-password=$MAGE_SETUP_ADMIN_PASSWORD
 
-chmod -R 777 var pub/static pub/media app/etc/env*
+chmod -R 777 var app/etc/env*
 
 ls -la vendor var pub/static pub/media app/etc
 
