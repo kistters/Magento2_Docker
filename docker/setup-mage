@@ -3,10 +3,6 @@ echo "Initializing setup..."
 
 cd /src/www
 
-echo "composer install"
-su-exec www-data \
-  composer install
-
 echo "dir"
 
 ls -la .
@@ -16,7 +12,11 @@ find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws 
 chown -R :www-data .
 chmod u+x bin/magento
 
-ls -la vendor
+
+
+echo "composer install"
+su-exec www-data \
+  composer install
 
 echo "setup"
 su-exec www-data \
@@ -32,5 +32,9 @@ su-exec www-data \
     --admin-email=$MAGE_SETUP_ADMIN_EMAIL \
     --admin-user=$MAGE_SETUP_ADMIN_USER \
     --admin-password=$MAGE_SETUP_ADMIN_PASSWORD
+
+chmod -R 777 var pub/static pub/media app/etc/env*
+
+ls -la vendor var pub/static pub/media app/etc
 
 echo "Setup finished..."
