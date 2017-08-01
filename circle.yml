@@ -30,6 +30,7 @@ deployment:
     branch: master
     commands:
       - docker images
+      - chmod u+x ./scripts/*
       - ./scripts/clean-untracked.sh
       - ./scripts/zip-magento.sh
       - ./scripts/deploy.sh
