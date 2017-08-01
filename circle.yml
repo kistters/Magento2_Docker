@@ -34,4 +34,4 @@ deployment:
       - docker images
       - ./scripts/clean-untracked.sh
       - ./scripts/zip-magento.sh
-      - "Happy now ..."
+      - ./scripts/deploy.sh
