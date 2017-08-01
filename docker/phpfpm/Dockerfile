@@ -9,12 +9,12 @@ RUN apk add --no-cache \
         --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/include
 
 RUN docker-php-ext-install \
-        gd 
+        gd \
         mcrypt \
-        pdo_mysql 
-        intl zip 
+        pdo_mysql \
+        intl zip \
         bcmath \
-        soap
+        soap \
         xsl
 
 RUN curl -sS https://getcomposer.org/installer | \
