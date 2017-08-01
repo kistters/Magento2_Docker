@@ -1,12 +1,14 @@
-FROM alpine:3.2
+FROM nginx:stable-alpine
 
-RUN apk add --update nginx && rm -rf /var/cache/apk/*
-RUN mkdir -p /tmp/nginx/client-body
+# ensure www-data user exists
+RUN set -x ; \
+  addgroup -g 82 -S www-data ; \
+  adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./includes.d /etc/nginx/includes.d
 COPY ./conf.d/* /etc/nginx/conf.d/
 
-WORKDIR /srv/www
+WORKDIR /src/www
 
 CMD ["nginx", "-g", "daemon off;"]

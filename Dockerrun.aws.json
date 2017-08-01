@@ -1,0 +1,11 @@
+{
+	"AWSEBDockerrunVersion":2,
+		"containerDefinitions":[
+			{
+				"name":"phpfpm",
+				"image":"125590874533.dkr.ecr.us-west-2.amazonaws.com/mage2-devops:latest",
+				"essential":true,
+				"memory":5024
+			}
+		]
+}

@@ -20,6 +20,7 @@ services:
         restart: always
         volumes:
             - ./src:/src/www
+            - ./docker/setup-mage:/src/setup-mage
         environment:
             - MAGE_SETUP_DB_HOST=percona
             - MAGE_SETUP_DB_NAME=MAGE_TEST

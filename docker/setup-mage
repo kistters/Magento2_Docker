@@ -1,6 +1,8 @@
 #!/bin/sh
 echo "Initializing setup..."
 
+cd /src/www
+
 echo "composer install"
 su-exec www-data \
   composer install

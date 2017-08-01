@@ -8,4 +8,4 @@ docker-compose up -d --build web percona; sleep 3
 echo "setup magento"
 
 docker-compose -f docker-compose.yml \
-			run --rm phpfpm /bin/sh -c "./setup-mage"
+			run --rm phpfpm /bin/sh -c "../setup-mage"
