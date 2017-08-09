@@ -6,5 +6,11 @@ du -sh ./src
 echo "preparar ZIP"
 echo "--------------------------------------------"
 
-zip -rq magento.zip ./src
+ls -la .
+
+mv ./src ./magento
+
+zip -rq magento.zip ./magento
 du -sh ./magento.zip
+du -sh ./magento
+du -sh ./src

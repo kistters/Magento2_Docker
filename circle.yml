@@ -12,11 +12,11 @@ dependencies:
     
 database:
   override:
-    - docker-compose build percona; sleep 5
+    - docker-compose build percona
 
 compile:
   override:
-    - docker-compose up -d --build web percona; sleep 3
+    - docker-compose up -d --build web percona
 test:
   pre:
     - |
@@ -31,6 +31,4 @@ deployment:
     commands:
       - docker images
       - chmod u+x ./scripts/*
-      - ./scripts/clean-untracked.sh
       - ./scripts/zip-magento.sh
-      - ./scripts/deploy.sh

@@ -6,9 +6,8 @@ RUN apk add --no-cache \
     libintl icu icu-dev libxml2-dev \
     libxslt-dev \
     && docker-php-ext-configure gd  \
-        --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/include
-
-RUN docker-php-ext-install \
+        --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/include \
+    && docker-php-ext-install \
         gd \
         mcrypt \
         pdo_mysql \
