@@ -1,9 +1,7 @@
 #!/bin/sh
-echo "circle"
-
-echo "build images and containers"
+echo "build and up percona"
 docker-compose build percona; sleep 5
-docker-compose up -d --build percona
+docker-compose up -d percona
 
 echo "setup magento"
 

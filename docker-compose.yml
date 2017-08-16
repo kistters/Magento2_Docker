@@ -24,7 +24,7 @@ services:
             - MAGE_SETUP_DB_HOST=percona
             - MAGE_SETUP_DB_NAME=MAGE_TWO
             - MAGE_SETUP_DB_USER=mage
-            - MAGE_SETUP_DB_PASSWORD=mage
+            - MAGE_SETUP_DB_PASSWORD=123
             - MAGE_SETUP_BASE_URL=http://it.mage-two/
             - MAGE_SETUP_ADMIN_BACKEND_FRONTNAME=admin
             - MAGE_SETUP_ADMIN_FIRSTNAME=Owner
@@ -45,7 +45,7 @@ services:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_DATABASE=MAGE_TWO
             - MYSQL_USER=mage
-            - MYSQL_PASSWORD=mage
+            - MYSQL_PASSWORD=123
         networks:
             - network-back
 
@@ -81,4 +81,3 @@ services:
 networks:
     network-back:
         driver: bridge
-        name: actual-name-of-network
