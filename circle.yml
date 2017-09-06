@@ -40,7 +40,7 @@ test:
 
   override:
     - |
-        docker-compose -f docker-compose.yml \ 
+        docker-compose -f docker-compose.yml \
               run phpfpm /bin/sh -c "php -d memory_limit=2G /src/www/bin/magento dev:tests:run integration --ansi --no-interaction" | tee IntegrationTest
       
         if grep -q "F" IntegrationTest
