@@ -36,7 +36,7 @@ test:
           echo "Setup Test passed"
           exit 0 
         fi        
-    - docker-compose -f docker-compose.yml run phpfpm /bin/sh -c "apk add --no-cache mysql-client
+    - docker-compose -f docker-compose.yml run phpfpm /bin/sh -c "apk add --no-cache mysql-client"
 
   override:
     - |
