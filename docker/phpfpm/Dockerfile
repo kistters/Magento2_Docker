@@ -1,24 +1,22 @@
-FROM php:7.0-fpm-alpine
+FROM php:7.0.21-fpm-alpine
 
 RUN apk add --no-cache \
     libpng libpng-dev libjpeg-turbo-dev freetype-dev \    
-    libmcrypt-dev \
-    libintl icu icu-dev libxml2-dev \
+    libmcrypt-dev libintl icu icu-dev libxml2-dev \
     libxslt-dev \
     && docker-php-ext-configure gd  \
         --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/include \
     && docker-php-ext-install \
-        gd \
-        mcrypt \
-        pdo_mysql \
-        intl zip \
-        bcmath \
-        soap \
-        xsl
+        gd mcrypt pdo_mysql intl zip \
+        xsl bcmath  soap
 
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN apk add --update --no-cache su-exec
+# Install mailhog.
+RUN curl -fSL "https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_amd64" -o /usr/local/bin/mailhog \
+    && chmod +x /usr/local/bin/mailhog
 
-WORKDIR /src/www
+COPY ./mailhog.ini /usr/local/etc/php/conf.d/mailhog.ini
+
+CMD ["php-fpm"]

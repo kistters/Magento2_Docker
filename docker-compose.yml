@@ -1,7 +1,6 @@
 version: '2'
 
 services:
-## MAIN SERVICES ##
     web:
         build: docker/nginx
         restart: always
@@ -10,7 +9,7 @@ services:
             - "443:443"
         volumes:
             - ./src:/src/www
-        links:  # o link define a ordem de build ;)
+        links:
            - phpfpm
         networks:
             - network-back
@@ -20,12 +19,12 @@ services:
         restart: always
         volumes:
             - ./src:/src/www
-            - ./docker/setup-mage:/src/setup-mage
+            - ./docker/setup-mage.sh:/src/setup-mage.sh
         environment:
             - MAGE_SETUP_DB_HOST=percona
-            - MAGE_SETUP_DB_NAME=MAGE_TEST
+            - MAGE_SETUP_DB_NAME=MAGE_TWO
             - MAGE_SETUP_DB_USER=mage
-            - MAGE_SETUP_DB_PASSWORD=mage
+            - MAGE_SETUP_DB_PASSWORD=123
             - MAGE_SETUP_BASE_URL=http://it.mage-two/
             - MAGE_SETUP_ADMIN_BACKEND_FRONTNAME=admin
             - MAGE_SETUP_ADMIN_FIRSTNAME=Owner
@@ -35,20 +34,18 @@ services:
             - MAGE_SETUP_ADMIN_PASSWORD=12345qw
         networks:
             - network-back
-
-## LOCAL TOOLS ##      
+   
     percona:
         image: percona
         restart: always
-        container_name: percona_development
         volumes:
             - ./docker/mysql/data/percona:/var/lib/mysql
             - ./docker/mysql/dumps:/dumps
         environment:
             - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_DATABASE=MAGE_TEST
+            - MYSQL_DATABASE=MAGE_TWO
             - MYSQL_USER=mage
-            - MYSQL_PASSWORD=mage
+            - MYSQL_PASSWORD=123
         networks:
             - network-back
 
@@ -64,6 +61,22 @@ services:
             - /sessions
         networks:
             - network-back
+    redis:
+        image: redis
+        restart: always
+        ports:
+          - 6379:6379
+        networks:
+            - network-back
+
+    mailhog:
+        image: mailhog/mailhog:latest
+        restart: always
+        ports:
+          - "1025:1025"
+          - "8025:8025"
+        networks:
+          - network-back
 
 networks:
     network-back:
