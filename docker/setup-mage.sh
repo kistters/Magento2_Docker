@@ -3,14 +3,11 @@ echo "Initializing setup..."
 
 cd /src/www
 
-find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} \;
-find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
-
 chown -R :www-data .
-chmod u+x bin/magentod
+chmod u+x bin/magento
 
 echo "composer install"
-composer install
+composer install --prefer-dist
 
 echo "setup"
 php -d memory_limit=2G ./bin/magento setup:install \
@@ -26,9 +23,8 @@ php -d memory_limit=2G ./bin/magento setup:install \
     --admin-user=$MAGE_SETUP_ADMIN_USER \
     --admin-password=$MAGE_SETUP_ADMIN_PASSWORD
 
-find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} \;
-find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
-chown -R :www-data .
+find var vendor pub/static pub/media app/etc -type f -exec chmod g+w {} \;
+find var vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
 
 ls -la .
 

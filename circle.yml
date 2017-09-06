@@ -13,19 +13,12 @@ dependencies:
 database:
   override:
     - docker-compose build percona
-<<<<<<< HEAD
-
-compile:
-  override:
-    - docker-compose up -d --build web percona
-=======
     - docker-compose up -d percona
 
 compile:
   override:
     - docker-compose up -d --build web
     - docker images
->>>>>>> 04f1625bf6dfbf06313e4e5d9cac37f7d678789d
 test:
   pre:
     - |
@@ -38,21 +31,24 @@ test:
           cat ./SetupTest | grep fail | awk '{print $2, $3}'
         exit 1
 
-<<<<<<< HEAD
-deployment:
-  staging:
-    branch: master
-    commands:
-      - docker images
-      - chmod u+x ./scripts/*
-      - ./scripts/zip-magento.sh
-=======
         else
           echo "Setup Test passed"
+          exit 0 
         fi
 
-        exit 0 
-
   override:
-    - exit 0
->>>>>>> 04f1625bf6dfbf06313e4e5d9cac37f7d678789d
+    - |
+       docker-compose -f docker-compose.yml \ 
+              run phpfpm /bin/sh -c "apk add --no-cache mysql-client \ 
+                && php -d memory_limit=2G /src/www/bin/magento dev:tests:run integration --ansi --no-interaction" | tee IntegrationTest
+      
+      if grep -q "F" IntegrationTest
+        then
+          echo "Setup Test Failed:"
+          cat ./IntegrationTest | grep fail | awk '{print $2, $3}'
+        exit 1
+
+        else
+          echo "Setup Test passed"
+          exit 0 
+        fi
