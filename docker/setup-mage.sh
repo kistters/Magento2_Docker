@@ -3,11 +3,11 @@ echo "Initializing setup..."
 
 cd /src/www
 
-chown -R :www-data .
-chmod u+x bin/magento
-
 echo "composer install"
 composer install --prefer-dist
+
+chown -R :www-data .
+chmod u+x ./bin/magento
 
 echo "setup"
 php -d memory_limit=2G ./bin/magento setup:install \
