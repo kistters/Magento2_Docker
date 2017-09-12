@@ -1,6 +1,6 @@
 {
-    "name": "Magento-2/DevOps",
-    "description": "eCommerce Platform for Growth (Community Edition)",
+    "name": "dev-ops/mage2-clean",
+    "description": "eCommerce Magento 2 Clean",
     "type": "project",
     "version": "2.1.8",
     "license": [
