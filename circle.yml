@@ -43,7 +43,7 @@ test:
     -   docker-compose -f docker-compose.yml run phpfpm /bin/sh -c " ls " 
     - |
         docker-compose -f docker-compose.yml \
-              run phpfpm /bin/sh -c " apk add --no-cache mysql-client && php -d memory_limit=2G /src/www/bin/magento dev:tests:run integration --ansi --no-interaction" | tee IntegrationTest
+              run phpfpm /bin/sh -c " apk add --no-cache mysql-client && php -d memory_limit=2G /src/www/bin/magento dev:tests:run unit --ansi --no-interaction" | tee IntegrationTest
       
         if grep -q "F" IntegrationTest
         then
