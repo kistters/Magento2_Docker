@@ -43,12 +43,12 @@ test:
     -   docker-compose -f docker-compose.yml run phpfpm /bin/sh -c " ls " 
     - |
         docker-compose -f docker-compose.yml \
-              run phpfpm /bin/sh -c " apk add --no-cache mysql-client && php -d memory_limit=2G /src/www/bin/magento dev:tests:run unit --ansi --no-interaction" | tee IntegrationTest
+              run phpfpm /bin/sh -c "cd /src/www && php ./vendor/phpunit/phpunit/phpunit --configuration ./dev/tests/unit/phpunit.xml.dist ./app/code/Robot/" | tee UnitTest
       
-        if grep -q "F" IntegrationTest
+        if grep -q "failure" UnitTest
         then
           echo "Setup Test Failed:"
-          cat ./IntegrationTest | grep fail | awk '{print $2, $3}'
+          cat ./UnitTest | grep fail | awk '{print $2, $3}'
         exit 1
 
         else
