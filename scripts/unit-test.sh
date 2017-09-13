@@ -1,4 +1,5 @@
 #!/bin/sh
+exit 1
 
 docker-compose -f docker-compose.yml \
         run phpfpm /bin/sh -c "cd /src/www && php ./vendor/phpunit/phpunit/phpunit --configuration ./dev/tests/unit/phpunit.xml.dist ./app/code/Robot/" | tee UnitTest
@@ -13,5 +14,3 @@ else
   	echo "Setup Test passed"
   	exit 0 
 fi
-
-exit 1
