@@ -10,6 +10,8 @@ RUN apk add --no-cache \
         gd mcrypt pdo_mysql intl zip \
         xsl bcmath  soap
 
+ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data 
+
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
 

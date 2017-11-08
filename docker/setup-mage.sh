@@ -3,7 +3,6 @@ echo "Initializing setup..."
 
 cd /src/www
 
-echo "composer install"
 file="/src/www/composer.json"
 if [ -f "$file" ]
 then
@@ -12,6 +11,7 @@ else
     composer create-project --prefer-dist --repository-url=https://repo.magento.com/ magento/project-community-edition /src/www 2.2 
 fi
 
+    cp /root/.composer/auth.json /src/www
     chown -R :www-data .
     chmod u+x ./bin/magento
 
@@ -29,8 +29,8 @@ fi
         --admin-user=$MAGE_SETUP_ADMIN_USER \
         --admin-password=$MAGE_SETUP_ADMIN_PASSWORD
 
-    find var vendor pub/static pub/media app/etc -type f -exec chmod g+w {} \;
-    find var vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
+    find var vendor generated pub/static pub/media app/etc -type f -exec chmod g+w {} \;
+    find var vendor generated pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
 
     ls -la .
 
