@@ -21,4 +21,17 @@ RUN curl -fSL "https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailH
 
 COPY ./mailhog.ini /usr/local/etc/php/conf.d/mailhog.ini
 
+RUN apk add --update --no-cache \
+        curl \ 
+        g++ \
+        make \
+        autoconf \
+    && docker-php-source extract \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && docker-php-source delete \
+    && rm -rf /tmp/*
+
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
 CMD ["php-fpm"]
