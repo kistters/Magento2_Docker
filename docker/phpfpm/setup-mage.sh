@@ -3,17 +3,21 @@ echo "Initializing setup..."
 
 PROJECT_FOLDER=/storage
 
-cd $PROJECT_FOLDER
-ls 
-# file="/src/www/composer.json"
-# if [ -f "$file" ]
-# then
-#     composer update --prefer-dist
-# else
-#     composer create-project --prefer-dist --repository-url=https://repo.magento.com/ magento/project-community-edition $PROJECT_FOLDER 2.2 
-# fi
+chown -R www-data:www-data $PROJECT_FOLDER
 
-    # cp /root/.composer/auth.json /src/www
+cd $PROJECT_FOLDER
+
+rm -rf ./MAUMAU
+
+file="/src/www/composer.json"
+if [ -f "$file" ]
+then
+    su www-data -s /bin/sh -c 'composer update --prefer-dist'
+    cp /root/.composer/auth.json /storage
+else
+    su www-data -s /bin/sh -c 'composer create-project --prefer-dist --repository-url=https://repo.magento.com/ magento/project-community-edition $PROJECT_FOLDER' 
+fi
+
     # #chown -R :www-data .
     # chmod u+x ./bin/magento
 
@@ -31,8 +35,8 @@ ls
     #     --admin-user=$MAGE_SETUP_ADMIN_USER \
     #     --admin-password=$MAGE_SETUP_ADMIN_PASSWORD
 
-    # find var vendor generated pub/static pub/media app/etc -type f -exec chmod g+w {} \;
-    # find var vendor generated pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
+    #find var vendor generated pub/static pub/media app/etc -type f -exec chmod g+w {} \;
+    #find var vendor generated pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
 
     # ls -la .
 
