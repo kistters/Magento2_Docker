@@ -15,7 +15,7 @@ then
     su www-data -s /bin/sh -c 'composer update --prefer-dist'
     cp /root/.composer/auth.json /storage
 else
-    su www-data -s /bin/sh -c 'composer create-project --prefer-dist --repository-url=https://repo.magento.com/ magento/project-community-edition $PROJECT_FOLDER' 
+    su www-data -s /bin/sh -c "composer create-project --prefer-dist --repository-url=https://repo.magento.com/ magento/project-community-edition $PROJECT_FOLDER 2.*" 
 fi
 
     # #chown -R :www-data .
