@@ -1,7 +1,7 @@
-FROM php:7.0.21-fpm-alpine
+FROM php:7.0.30-fpm-alpine
 
 RUN apk add --no-cache \
-    libpng libpng-dev libjpeg-turbo-dev freetype-dev \    
+    libpng libpng-dev libjpeg-turbo-dev freetype-dev \
     libmcrypt-dev libintl icu icu-dev libxml2-dev \
     libxslt-dev \
     && docker-php-ext-configure gd  \
@@ -9,8 +9,6 @@ RUN apk add --no-cache \
     && docker-php-ext-install \
         gd mcrypt pdo_mysql intl zip \
         xsl bcmath  soap
-
-ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data 
 
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
@@ -22,7 +20,7 @@ RUN curl -fSL "https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailH
 COPY ./mailhog.ini /usr/local/etc/php/conf.d/mailhog.ini
 
 RUN apk add --update --no-cache \
-        curl \ 
+        curl \
         g++ \
         make \
         autoconf \
@@ -33,5 +31,6 @@ RUN apk add --update --no-cache \
     && rm -rf /tmp/*
 
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY ./setup-mage.sh /src/setup-mage.sh
 
 CMD ["php-fpm"]

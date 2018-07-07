@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "build and up percona"
-docker-compose build percona
+docker-compose build percona phpfpm
 docker-compose up -d percona
 
 sleep 5
@@ -8,7 +8,7 @@ sleep 5
 echo "setup magento"
 
 docker-compose -f docker-compose.yml \
- 			run --rm phpfpm /bin/sh -c "chmod u+x /src/setup-mage.sh && /src/setup-mage.sh"  | tee SetupTest
+ 			run --rm phpfpm /bin/sh -c "/src/setup-mage.sh"  | tee SetupTest
 
     if grep -q "fail" SetupTest
     then

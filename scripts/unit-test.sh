@@ -1,7 +1,7 @@
 #!/bin/sh
 
 docker-compose -f docker-compose.yml \
-        run phpfpm /bin/sh -c "cd /src/www && php ./vendor/phpunit/phpunit/phpunit --configuration ./dev/tests/unit/phpunit.xml.dist ./app/code/Robot/" | tee UnitTest
+        run phpfpm /bin/sh -c "cd /storage && php ./vendor/phpunit/phpunit/phpunit --configuration ./dev/tests/unit/phpunit.xml.dist ./app/code/Robot/" | tee UnitTest
       
 if grep -q "failure" UnitTest
 then
